@@ -46,11 +46,11 @@ body{
   display: flex;
   gap: 10px;
 }
-.sortList div{  
+.sortList button{  
   background-color: #61dafb;
   padding: 5px;
 }
-.sortList div:hover{
+.sortList button:hover{
   cursor: pointer;
   background-color: #4cabc5;
 }

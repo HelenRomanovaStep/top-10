@@ -1,87 +1,6 @@
-import React,{useState} from 'react';
+import React,{useState,createRef} from 'react';
 import './Director.css';
-
-
-// Steven Allan Spielberg
-function Form(props){
-   const {action}=props;  
-
-    const output = React.createRef();  
-    const newDirectors = React.createRef();   
- 
-    const  [val, setVal] = useState('');
-
-   const handleClick = () =>{ 
-  //   output.current.textContent = newDirectors.current.value;
-  }
-  const handleChange = (e) =>{ 
-   // output.current.textContent = newDirectors.current.value;
-   //setVal(newDirectors.current.value);
-   setVal(e.target.value);  
-   
-  }
-  
-  const handleClickDirector = (val) =>{ 
-    // результатом метода split является разделение строки 
-    // на несколько элементов массива
-   //const [name, lastname] = newDirectors.current.value.split(' ');
-   const [name, lastname] = val.trim().split(' ');
-
-  //  console.log(val.split(' '));
-  //  console.log(name,lastname);
-
-  //  const newDirector ={
-  //    name: name,
-  //    lastname: lastname
-  //  }
-
-     //можно сократить
-    //  const newDirector ={name, lastname }
-    //  props.action(newDirector);
-
-     //можно сократить
-     action({name, lastname});
-
-     //очистили поле
-    // newDirectors.current.value ='';
-    // output.current.textContent='';
-    setVal('');
-  }
- 
-  return(  
-    <div className="form">
-       {/* <p ref={output}>{val}</p>   */}
-       <p>1 {val}</p> 
-       <input 
-          id="new-dir"  
-          type="text" 
-          ref={newDirectors}          
-          onChange={handleChange} 
-          value={val}         
-        />     
-          
-       <input type="button" 
-         onClick={()=>handleClickDirector(val)} 
-         value="добавить"/>   
-    </div>
-  )
-}
-
-//выводит один пункт списка из режиссеров
-function Director(props) {   
-  const {id,name,lastname,action} = props;
-  
-  return (<li 
-    className="list" 
-     onDoubleClick={action}
-    >       <span>{id}</span> <span>{ name }</span> <span>{ lastname }</span>     
-    </li>
-  );
-}
-
-//вызывает Director и передает пропсы по каждому компоненту
-function DirectorList(){
-  //useStat не имеет доступа к внешней сущности directors
+//useStat не имеет доступа к внешней сущности directors
   //поэтому перенесли массив directors 
   const directors =[
     {
@@ -101,60 +20,164 @@ function DirectorList(){
       lastname:'Lucas'
     }
   ]
+
+// Steven Allan Spielberg
+function Form(props){
+   const {action}=props;  
+
+    const output =  createRef();  
+    const newDirectors =  createRef();   
+ 
+    const  [val, setVal] = useState('');
+    
+    const handleSubmit = event=>{
+       event.preventDefault();
+       console.log(event); 
+         /*
+        Получаем доступ к текстовому полю
+        */
+        let uName = document.getElementById('newDir');         
+        console.log(uName.value); 
+        
+        const [name, lastname] = val.trim().split(' ');
+        action({name, lastname});
+        setVal('');
+    }
+  
+   const handleClick = () =>{ 
+  //   output.current.textContent = newDirectors.current.value;
+  }
+  const handleChange = (e) =>{ 
+   // output.current.textContent = newDirectors.current.value;
+   //setVal(newDirectors.current.value);
+      setVal(e.target.value);  
+   
+  }
+  
+  const handleClickDirector = (val) =>{ 
+    // результатом метода split является разделение строки 
+    // на несколько элементов массива
+   //const [name, lastname] = newDirectors.current.value.split(' ');
+   //const [name, lastname] = val.trim().split(' ');
+
+  //  console.log(val.split(' '));
+  //  console.log(name,lastname);
+
+  //  const newDirector ={
+  //    name: name,
+  //    lastname: lastname
+  //  }
+
+     //можно сократить
+    //  const newDirector ={name, lastname }
+    //  props.action(newDirector);
+
+     //можно сократить
+     //action({name, lastname});
+
+     //очистили поле
+    // newDirectors.current.value ='';
+    // output.current.textContent='';
+    //setVal('');
+  }
+ 
+  return(  
+    <form className="form" onSubmit={handleSubmit }>
+       {/* <p ref={output}>{val}</p>   */}
+       <p>1 {val}</p> 
+       <input 
+          id="newDir"  
+          type="text" 
+          ref={newDirectors}          
+          onChange={handleChange} 
+            value={val}         
+        />     
+          
+       <input type="submit" 
+        //  onClick={()=>handleClickDirector(val)} 
+         value="добавить"/>   
+    </form>
+  )
+}
+
+//выводит один пункт списка из режиссеров
+function Director(props) {   
+  const {id,name,lastname,action} = props;  
+  return (
+  <li 
+    className="list" 
+     onDoubleClick={action}>       
+    <span>{id}</span> <span>{ name }</span> <span>{ lastname }</span>     
+    </li>
+  );
+}
+//кнопка дейсвтий
+function Button(props){
+  const {caption,action} = props;  
+  return(
+    <button onClick={action}>{caption}</button>
+  )
+}
+
+//вызывает Director и передает пропсы по каждому компоненту
+function DirectorList( ){
+  // const {directors} = props
+
   const [directorsList,setDirectorsList] = useState(directors);
   
   const addDirectors =(newDirector)=>{
-    //создали newDirector формируется 
+    //создали newDirector, она формируется 
     //на основе текущей directorsList - как копия существующего масссив
-    const newDirectorList = [...directorsList]; 
+          // const newDirectorList = [...directorsList]; 
     
     //создали новый объект на основе данных, котороые прилетели
-    //этому объекту добавили id - берем из расчета количества элментов в маасиве
-    
-     
+    //этому объекту добавили id - берем из расчета количества элментов в маасиве    
+     console.log(directorsList.length);
     (directorsList.length>0) && directorsList.sort((a, b) => a.id - b.id) ;
     let key = directorsList.length>0       
-        ? directorsList[directorsList.length-1].id
-        : 0; 
+        ? directorsList[directorsList.length-1].id + 1
+        : 1; 
         
-     newDirector={ 
-        // id:directorsList.length-1, 
-        id:  key+1,           
-        // name:'James ',
-        // lastname:'Cameron' 
-        ...newDirector     
-    }
+    //  newDirector={ 
+    //     // id:directorsList.length-1, 
+    //     id:  key+1,           
+    //     // name:'James ',
+    //     // lastname:'Cameron' 
+    //     ...newDirector     
+    // }
    
     //даллее этот объект пушим в массив
-    newDirectorList.push(newDirector);
+          // newDirectorList.push(newDirector);
     //установили в  state  новый массив
     //запускает изменение состояния directorsList
-    setDirectorsList(newDirectorList)
+         //setDirectorsList(newDirectorList)
+    setDirectorsList([...directorsList, {id:  key,...newDirector }])  ;
+    console.log("directors",directorsList);
   }
-
   const removeItem = id => {
     console.log(id) ; 
     setDirectorsList(directorsList => directorsList.filter(el => el.id !== id))
    
   }
   const listInc=()=>{
-    let sortDirectors = [...directorsList]; 
-    sortDirectors=sortDirectors.sort((a, b) => a.id - b.id);           
-    setDirectorsList(sortDirectors) ;   
+    //let sortDirectors = [...directorsList]; 
+   // sortDirectors=sortDirectors.sort((a, b) => a.id - b.id);           
+   // setDirectorsList(sortDirectors) ; 
+   setDirectorsList([...directorsList].sort((a, b) => a.id - b.id)) ;   
   }
   
   const listDec=()=>{
-    let sortDirectors = [...directorsList]; 
-    sortDirectors=sortDirectors.sort((a, b) => b.id - a.id);       
-    setDirectorsList(sortDirectors) ;   
-      
+    // let sortDirectors = [...directorsList]; 
+    // sortDirectors=sortDirectors.sort((a, b) => b.id - a.id);       
+    // setDirectorsList(sortDirectors) ;   
+    setDirectorsList([...directorsList].sort((a, b) => b.id - a.id)) ;   
   }
 
   const listDecName=()=>{
-    let sortDirectors = [...directorsList]; 
-    sortDirectors=sortDirectors.sort((a,b)=> b.name.localeCompare(a.name));
-    console.log(sortDirectors);         
-    setDirectorsList(sortDirectors) ;   
+    // let sortDirectors = [...directorsList]; 
+    // sortDirectors=sortDirectors.sort((a,b)=> b.name.localeCompare(a.name));        
+    // setDirectorsList(sortDirectors) ;
+    setDirectorsList([...directorsList].sort((a,b)=> b.name.localeCompare(a.name)))
       
   }
   const listIncName=()=>{
@@ -184,27 +207,30 @@ function DirectorList(){
   return(
     <>
     <section className="sortList">
-      <div onClick={listRemove}>Удалить</div>
-      <div onClick={listInc}>по возрастанию id</div>
-      <div onClick={listDec}>по убыванию id</div>
+      <Button action={listRemove} caption={"Удалить"}/> 
+      <Button action={listInc} caption={"по возрастанию id"}/> 
+      <Button action={listDec} caption={"по убыванию id"}/> 
 
-      <div onClick={listIncName}>ABC Name</div>
-      <div onClick={listDecName}>по убыванию Name</div>
+      <Button action={listIncName} caption={"ABC Name"}/> 
+      <Button action={listDecName}caption={"по убыванию Name"} /> 
 
-      <div onClick={listIncFio}>в алфавитном порядке ФИО</div>
-      <div onClick={listDecFio}>по убыванию ФИО</div>
+      <Button action={listIncFio} caption={"в алфавитном порядке ФИО"}/> 
+      <Button action={listDecFio} caption={"по убыванию ФИО"}/> 
     </section> 
     {/* 1способ */}
-    {/* <Director {...directors[0]}/> 
-    <Director {...directors[1]}/> 
+    {/* <Director name={'James'} lastname={'Cameron'}/> 
+    <Director  name={directors[0].name}  lastname={directors[0].lastname} /> 
+    <Director {...{name:'Quentin', lastname:'Tarantino'}}/> 
+    <Director {...{name:directors[1].name, lastname:directors[1].lastname}}/> 
+     
     <Director {...directors[2]}/>  */}
     
     <ol className="directors">
      {/*2способ */}
     { 
     directorsList.map(director => {
-      return (       
-        <Director 
+      return (        
+        <Director  
         { ...director } 
         key={director.id}
         action={()=>removeItem(director.id)}
@@ -217,4 +243,10 @@ function DirectorList(){
   )
 }
 
-export default DirectorList;
+export default function App() {
+  return (
+  <>
+    <DirectorList directors={directors} />
+  </>
+  )}
+ 
