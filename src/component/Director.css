@@ -1,0 +1,40 @@
+body{
+    background: #3b3a3a;
+    color: white;
+}
+.director{
+    padding: 10px;
+    border-bottom: 1px solid rgb(212, 211, 211);
+    margin-bottom: 20px;
+    list-style: none;
+}
+.section-form{
+    width: 50%;
+    margin: 10px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    background: #a5a1a13f;
+    border-radius: 8px;
+}
+form{
+    display: flex;
+    width: 100%;   
+    /* background: #90faf56e;     */
+    padding: 10px;
+    /* flex-direction: column; */
+    gap: 20px;
+}
+[type="submit"]{
+   /* background: #1fb4b4;  
+   border: none; */
+}
+input{
+    height: 30px;
+}
+.navButtons {
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+}
