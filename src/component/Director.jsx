@@ -2,49 +2,39 @@ import React,{useState, createRef, useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import './Director.css';
-let directors=[
-  {
-    id: 1,
-    name: 'James',
-    sename:'Cameron'
-  },
-  {
-    id: 2,
-    name: 'Quentin',
-    sename:'Tarantino'
-  },
-  {
-    id:3,
-    name: 'Jon',
-    sename:'Lucas'
-  }
-]
+
 function Form(props){
 const {action} =props;
 
 const inputVal = createRef();
 const [val, setVal]= useState('');
 const[validName, setValidName]=useState(false);
+const[error, setError] = useState('');
 
 const hadlerSubmit=(e)=>{
-    e.preventDefault();
+     e.preventDefault();     
+     const [name,sename] = val.split(' ');
+     if(validName){
+       action({name, sename});
+       setVal('');
+       }else{
+        setError('Введите больше данных')
+     }
      
-     
-     const [name,sename] = val.split(' '); 
-     action({name, sename});
-     setVal('');
 }
-const hadlerChange=(e)=>{
-  
- setValidName(isValid(e.target.value));
+const hadlerChange=(e)=>{  
+  setError('');
 
+  setValidName(isValid(e.target.value));
   setVal(e.target.value);
   //setVal(inputVal.current.value);
 }
 const isValid=(name)=>{
   //  if (name.length>=2) return true 
   //  else return false
-  return (name.length>=2)
+  let reg = /^[a-zA-zа-яА-Я0-9.-\s]+$/gi;
+  
+  return (name.length>=2 && reg.test(name)) 
 }
   return(
     <section className="section-form">
@@ -66,8 +56,8 @@ const isValid=(name)=>{
             <i class="bi bi-plus"></i>
           </button>        
       </form>
-    {}
-      <p>Введите больше символов</p>
+    
+      <p>{error}</p>
 
     </section> 
    
