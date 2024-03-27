@@ -24,17 +24,27 @@ const {action} =props;
 
 const inputVal = createRef();
 const [val, setVal]= useState('');
+const[validName, setValidName]=useState(false);
 
- const hadlerSubmit=(e)=>{
+const hadlerSubmit=(e)=>{
     e.preventDefault();
      
      
      const [name,sename] = val.split(' '); 
      action({name, sename});
      setVal('');
- }
-const hadlerChange=()=>{
-  setVal(inputVal.current.value);
+}
+const hadlerChange=(e)=>{
+  
+ setValidName(isValid(e.target.value));
+
+  setVal(e.target.value);
+  //setVal(inputVal.current.value);
+}
+const isValid=(name)=>{
+  //  if (name.length>=2) return true 
+  //  else return false
+  return (name.length>=2)
 }
   return(
     <section className="section-form">
@@ -46,12 +56,19 @@ const hadlerChange=()=>{
               value= {val}
               onChange={hadlerChange}
               className="form-control"
+              style={{
+                borderColor:validName===true 
+                ? "yellow" 
+                :"red"
+              }}
               /> 
           <button type="submit" className="btn btn-secondary">
             <i class="bi bi-plus"></i>
           </button>        
       </form>
-      <p>{val}</p>
+    {}
+      <p>Введите больше символов</p>
+
     </section> 
    
   )
@@ -76,8 +93,8 @@ function ListDirectors(){
   
   useEffect(
     ()=>{
-      console.log('useEffect');
-      console.log(dirList.length);
+      // console.log('useEffect');
+      // console.log(dirList.length);
       localStorage.setItem('directors',JSON.stringify(dirList));
 
       // return(){
