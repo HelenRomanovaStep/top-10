@@ -1,0 +1,12 @@
+.footer{
+    height: 80px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+
+    background: #6b6a6a;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
