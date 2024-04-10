@@ -6,16 +6,39 @@ export default function ListButton(){
     const{deleteDir,ascId,ascName,ascSename,decId,removeItem}=useContext(Context);
     return(
         <> 
-            <Button />
-            <Button />
-            <Button />
-            <Button />
-            {/* <button onClick={deleteDir} className="btn btn-danger">Очистить </button>
-            <button onClick={ascId} className="btn btn-info"><i class="bi bi-arrow-down"></i> Id</button>
-            <button onClick={decId} className="btn btn-info"><i class="bi bi-arrow-up"></i> Id</button>
-
-            <button onClick={ascName} className="btn btn-info"><i class="bi bi-arrow-up"></i> Name </button>
-            <button onClick={ascSename} className="btn btn-info"><i class="bi bi-arrow-up"></i> Fio </button> */}
-        </>
+            <Button 
+             action={deleteDir}
+             className={"btn btn-danger"}  
+             icon={""} 
+             caption={"Очистить"}/>
+            
+            <Button 
+             action={ascId}
+             className={"btn btn-info"}  
+             icon={"bi bi-arrow-down"} 
+             caption={"Id"}
+            
+            />
+            <Button
+             action={decId}
+             className={"btn btn-info"}  
+             icon={"bi bi-arrow-up"} 
+             caption={"Id"} 
+            />
+            <Button
+             action={ascName}
+             className={"btn btn-info"}  
+             icon={"bi bi-arrow-up"} 
+             caption={"Name"} 
+            />
+            
+            <Button
+             action={ascSename}
+             className={"btn btn-info"}  
+             icon={"bi bi-arrow-up"} 
+             caption={"Sename"} 
+            />
+       </>      
+            
     )
 }
