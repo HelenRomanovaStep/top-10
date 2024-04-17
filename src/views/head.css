@@ -2,8 +2,25 @@
     height: 100px;
     margin-bottom: 2rem;
     display: flex;
+    flex-direction: column;
     justify-content:space-around;
     align-items: center;
     background: #252525;
     border-bottom: 1px solid #cccccc5e;
+}
+.nav{
+    display: flex;
+    gap: 2vw;    
+}
+.nav a{
+  color: rgb(208, 203, 203);
+  font-size: 20px;
+  text-decoration: none;
+  text-transform: uppercase;  
+}
+.nav a:hover{
+    color:rgb(127, 255, 238);
+}
+.nav a.active{
+    color: rgb(127, 255, 238);
 }
